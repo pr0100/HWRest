@@ -20,11 +20,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class AccountTests {
-  private static Faker faker = new Faker();
-  private String userName = faker.name().username();
-  private String successPasswd = faker.internet().password(8, 10, true, true, true);
-  private String errorPasswdLength = faker.internet().password(1, 5);
-  private String errorPasswdDigit = faker.internet().password(8, 9, true, true, false);
+  private static final Faker faker = new Faker();
+  private final String userName = faker.name().username();
+  private final String successPasswd = faker.internet().password(8, 10, true, true, true);
+  private final String errorPasswdLength = faker.internet().password(1, 5);
+  private final String errorPasswdDigit = faker.internet().password(8, 9, true, true, false);
 
   @BeforeAll
   public static void setUp()
@@ -71,9 +71,8 @@ public class AccountTests {
             .spec(unregistrResponseSpec)
             .extract().as(ErrorResponseModel.class));
 
-    step("Check response", ()-> {
-      assertEquals("UserName and Password required.", response.getMessage());
-    });
+    step("Check response", ()->
+        assertEquals("UserName and Password required.", response.getMessage()));
   }
 
   @Test
@@ -92,11 +91,10 @@ public class AccountTests {
             .spec(unregistrResponseSpec)
             .extract().as(ErrorResponseModel.class));
 
-    step("Check response", ()-> {
-      assertEquals("Passwords must have at least one non alphanumeric character, "
-          + "one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), "
-          + "one special character and Password must be eight characters or longer.", response.getMessage());
-    });
+    step("Check response", ()->
+        assertEquals("Passwords must have at least one non alphanumeric character, "
+        + "one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), "
+        + "one special character and Password must be eight characters or longer.", response.getMessage()));
   }
 
   @Test
@@ -115,11 +113,10 @@ public class AccountTests {
             .spec(unregistrResponseSpec)
             .extract().as(ErrorResponseModel.class));
 
-    step("Check response", ()-> {
-      assertEquals("Passwords must have at least one non alphanumeric character, "
-          + "one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), "
-          + "one special character and Password must be eight characters or longer.", response.getMessage());
-    });
+    step("Check response", ()->
+        assertEquals("Passwords must have at least one non alphanumeric character, "
+        + "one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), "
+        + "one special character and Password must be eight characters or longer.", response.getMessage()));
   }
 
   @Test

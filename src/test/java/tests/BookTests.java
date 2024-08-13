@@ -14,11 +14,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Тесты методов BookStore")
 public class BookTests {
 
-  private static Faker faker = new Faker();
-  private String elemArrayBooks = String.valueOf(faker.number().numberBetween(0, 7));
-  private String wrongIsbn = String.valueOf(faker.number().numberBetween(10, 12));
+  private static final Faker faker = new Faker();
+  private final String elemArrayBooks = String.valueOf(faker.number().numberBetween(0, 7));
+  private final String wrongIsbn = String.valueOf(faker.number().numberBetween(10, 12));
 
   @BeforeAll
   public static void setUp()  {
