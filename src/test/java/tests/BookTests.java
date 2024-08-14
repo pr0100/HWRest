@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Тесты методов BookStore")
+@DisplayName("Тесты для методов BookStore")
 public class BookTests {
 
   private static final Faker faker = new Faker();

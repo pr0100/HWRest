@@ -19,10 +19,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Тесты для методов Account")
 public class AccountTests {
   private static final Faker faker = new Faker();
   private final String userName = faker.name().username();
-  private final String successPasswd = faker.internet().password(8, 10, true, true, true);
+  private final String successPasswd = faker.internet().password(8, 15, true, true, true);
   private final String errorPasswdLength = faker.internet().password(1, 5);
   private final String errorPasswdDigit = faker.internet().password(8, 9, true, true, false);
 
