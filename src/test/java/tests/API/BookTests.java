@@ -1,13 +1,14 @@
-package tests;
+package tests.API;
 
 import static io.restassured.RestAssured.*;
 
-import com.github.javafaker.Faker;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.response.Response;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tests.TestData.*;
 
 import models.BookRequestModel;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,14 +18,11 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Тесты для методов BookStore")
 public class BookTests {
 
-  private static final Faker faker = new Faker();
-  private final String elemArrayBooks = String.valueOf(faker.number().numberBetween(0, 7));
-  private final String wrongIsbn = String.valueOf(faker.number().numberBetween(10, 12));
-
   @BeforeAll
   public static void setUp()  {
     baseURI = "https://demoqa.com/BookStore/v1";
     requestSpecification = new RequestSpecBuilder()
+        .addFilter(new AllureRestAssured())
         .log(LogDetail.ALL)
         .build();
     responseSpecification = new ResponseSpecBuilder()

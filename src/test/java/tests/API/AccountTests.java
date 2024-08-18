@@ -1,4 +1,5 @@
-package tests;
+package tests.API;
+
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
@@ -9,8 +10,9 @@ import static specs.AccountSpec.registrResponseSpec;
 import static specs.AccountSpec.tokenRequestSpec;
 import static specs.AccountSpec.tokenResponseSpec;
 import static specs.AccountSpec.unregistrResponseSpec;
+import static tests.TestData.*;
 
-import com.github.javafaker.Faker;
+
 import models.ErrorResponseModel;
 import models.TokenModel;
 import models.UserAccountModel;
@@ -21,11 +23,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Тесты для методов Account")
 public class AccountTests {
-  private static final Faker faker = new Faker();
-  private final String userName = faker.name().username();
-  private final String successPasswd = faker.internet().password(10, 15, true, true, true);
-  private final String errorPasswdLength = faker.internet().password(1, 5);
-  private final String errorPasswdDigit = faker.internet().password(8, 9, true, true, false);
+  //private final AllureListener allureListener = new AllureListener();
 
   @BeforeAll
   public static void setUp()
@@ -37,8 +35,9 @@ public class AccountTests {
   @DisplayName("Успешная регистрация пользователя")
   void successfulRegistrationUser() {
     UserAccountModel regParams = new UserAccountModel();
-    regParams.setUserName(userName);
-    regParams.setPassword(successPasswd);
+    regParams.setUserName(getSuccessfulUserName());
+    regParams.setPassword(getSuccessfulPasswd());
+
 
     UserAccountResponseModel response = step("Make request" , () ->
         given(registrRequestSpec)
@@ -60,27 +59,26 @@ public class AccountTests {
   @DisplayName("Регистрация пользователя без пароля")
   void regUserWithoutPassword400() {
     UserAccountModel regParams = new UserAccountModel();
-    regParams.setUserName(userName);
+    regParams.setUserName(getSuccessfulUserName());
     regParams.setPassword("");
 
-    ErrorResponseModel response = step("Make request" , () ->
+    ErrorResponseModel response =
         given(registrRequestSpec)
             .body(regParams)
         .when()
             .post()
         .then()
             .spec(unregistrResponseSpec)
-            .extract().as(ErrorResponseModel.class));
+            .extract().as(ErrorResponseModel.class);
 
-    step("Check response", ()->
-        assertEquals("UserName and Password required.", response.getMessage()));
+    assertEquals("UserName and Password required.", response.getMessage());
   }
 
   @Test
   @DisplayName("Регистрация пользователя с некорректным паролем - недостаток символов")
   void regUserPasswordNotEnoughChar400() {
     UserAccountModel regParams = new UserAccountModel();
-    regParams.setUserName(userName);
+    regParams.setUserName(getSuccessfulUserName());
     regParams.setPassword(errorPasswdLength);
 
     ErrorResponseModel response = step("Make request" , () ->
@@ -102,7 +100,7 @@ public class AccountTests {
   @DisplayName("Регистрация пользователя с некорректным паролем - нет цифры")
   void regUserPasswordNotDigit400() {
     UserAccountModel regParams = new UserAccountModel();
-    regParams.setUserName(userName);
+    regParams.setUserName(getSuccessfulUserName());
     regParams.setPassword(errorPasswdDigit);
 
     ErrorResponseModel response = step("Make request" , () ->
@@ -124,8 +122,8 @@ public class AccountTests {
   @DisplayName("Успешное создание токена пользователя")
   void successfulGenerateUserToken() {
     UserAccountModel regParams = new UserAccountModel();
-    regParams.setUserName(userName);
-    regParams.setPassword(successPasswd);
+    regParams.setUserName(getSuccessfulUserName());
+    regParams.setPassword(getSuccessfulPasswd());
 
     step("Make registration request" , () ->
         given(registrRequestSpec)
