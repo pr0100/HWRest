@@ -11,8 +11,17 @@ import io.restassured.specification.ResponseSpecification;
 import io.restassured.builder.ResponseSpecBuilder;
 
 public class BooksSpec {
+
+  public static RequestSpecification addBookRequestSpec = with()
+      .filter(new AllureRestAssured())
+      .log().uri()
+      .log().body()
+      .log().headers()
+      .contentType("application/json")
+      .basePath("BookStore/v1/Books");
+
   public static ResponseSpecification booksResponseSpec = new ResponseSpecBuilder()
-      .expectStatusCode(200)
+      .expectStatusCode(201)
       .log(STATUS)
       .log(BODY)
       .build();

@@ -18,8 +18,10 @@ public class TestData {
   //public static String successPasswd = "a!1" + faker.internet().password(8, 15, true, true, true);
   public static String errorPasswdLength = faker.internet().password(1, 5);
   public static String errorPasswdDigit = faker.internet().password(8, 9, true, true, false);
-  public static String elemArrayBooks = String.valueOf(faker.number().numberBetween(0, 7));
+  public static int elemArrayBooks = faker.number().numberBetween(0, 7);
   public static String wrongIsbn = String.valueOf(faker.number().numberBetween(10, 12));
+  public static String defaultLogin = "SSStas";
+  public static String defaultPassword = "!Password123";
 
   private static String getRandomName() {
     String[] names = {"Vega", "Cantrell", "Gentry"};
@@ -39,4 +41,5 @@ public class TestData {
     return "a!1" + faker.internet().password(8, 15, true, true, true);
   }
 
+  //public static
 }

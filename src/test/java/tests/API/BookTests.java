@@ -16,11 +16,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Тесты для методов BookStore")
-public class BookTests {
+public class BookTests extends ApiConfig {
 
   @BeforeAll
-  public static void setUp()  {
-    baseURI = "https://demoqa.com/BookStore/v1";
+  public static void setUpSpec()  {
     requestSpecification = new RequestSpecBuilder()
         .addFilter(new AllureRestAssured())
         .log(LogDetail.ALL)
@@ -33,7 +32,7 @@ public class BookTests {
   @Test
   @DisplayName("Поиск всех книг")
   void successfulBooksSearch() {
-    Response response = get("/Books");
+    Response response = get("BookStore/v1/Books");
     int booksSize = response.path("books.size()");
     assertEquals(8, booksSize);
   }
@@ -41,12 +40,12 @@ public class BookTests {
   @Test
   @DisplayName("Успешный поиск книги с определенным ISBN")
   void successfulBookSearch() {
-    Response responseAllBooks = get("/Books");
+    Response responseAllBooks = get("BookStore/v1/Books");
     String paramIsbn = responseAllBooks.path("books[" + elemArrayBooks + "].isbn");
 
     BookRequestModel getParam = new BookRequestModel();
     getParam.setIsbn(paramIsbn);
-    Response responseOneBooks = get("/Book?ISBN=" + getParam.getIsbn());
+    Response responseOneBooks = get("BookStore/v1/Book?ISBN=" + getParam.getIsbn());
 
     String isbn = responseOneBooks.path("isbn");
     assertEquals(getParam.getIsbn(), isbn);
@@ -55,7 +54,7 @@ public class BookTests {
   @Test
   @DisplayName("Поиск книги, которой нет в Books Store")
   void bookSearchNotFound() {
-    Response response = get("/Book?ISBN=" + wrongIsbn);
+    Response response = get("BookStore/v1/Book?ISBN=" + wrongIsbn);
 
     String message = response.path("message");
     assertEquals("ISBN supplied is not available in Books Collection!", message);

@@ -22,14 +22,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Тесты для методов Account")
-public class AccountTests {
-  //private final AllureListener allureListener = new AllureListener();
-
-  @BeforeAll
-  public static void setUp()
-  {
-    baseURI = "https://demoqa.com/Account/v1";
-  }
+public class AccountTests extends ApiConfig {
 
   @Test
   @DisplayName("Успешная регистрация пользователя")
@@ -37,7 +30,6 @@ public class AccountTests {
     UserAccountModel regParams = new UserAccountModel();
     regParams.setUserName(getSuccessfulUserName());
     regParams.setPassword(getSuccessfulPasswd());
-
 
     UserAccountResponseModel response = step("Make request" , () ->
         given(registrRequestSpec)

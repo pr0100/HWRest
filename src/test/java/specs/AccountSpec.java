@@ -18,7 +18,7 @@ public class AccountSpec {
       .log().body()
       .log().headers()
       .contentType(JSON)
-      .basePath("/User");
+      .basePath("Account/v1/User");
 
   public static RequestSpecification tokenRequestSpec = with()
       .filter(new AllureRestAssured())
@@ -26,7 +26,7 @@ public class AccountSpec {
       .log().body()
       .log().headers()
       .contentType(JSON)
-      .basePath("/GenerateToken");
+      .basePath("Account/v1/GenerateToken");
 
   public static ResponseSpecification registrResponseSpec = new ResponseSpecBuilder()
       .expectStatusCode(201)
