@@ -10,39 +10,38 @@ import models.UserAccountModel;
 
 public class AuthorizationApi {
 
-  @Step
-  public Response getLoginResponse() {
+  private UserAccountModel getParams() {
     UserAccountModel regParams = new UserAccountModel();
     regParams.setUserName(defaultLogin);
     regParams.setPassword(defaultPassword);
+    return regParams;
+  }
 
+  @Step
+  public Response getLoginResponse() {
     return given()
-            .contentType("application/json")
-            .body(regParams)
-            .when()
-            .post("/Account/v1/Login")
-            .then()
-            .log().all()
-            .statusCode(200)
-            .extract()
-            .response();
+          .contentType("application/json")
+          .body(getParams())
+        .when()
+          .post("/Account/v1/Login")
+        .then()
+          .log().all()
+          .statusCode(200)
+          .extract()
+          .response();
   }
 
   @Step
   public Response getTokenResponse() {
-    UserAccountModel regParams = new UserAccountModel();
-    regParams.setUserName(defaultLogin);
-    regParams.setPassword(defaultPassword);
-
     return given()
-            .contentType("application/json")
-            .body(regParams)
-            .when()
-            .post("/Account/v1/GenerateToken")
-            .then()
-            .log().all()
-            .statusCode(200)
-            .extract()
-            .response();
+          .contentType("application/json")
+          .body(getParams())
+        .when()
+          .post("/Account/v1/GenerateToken")
+        .then()
+          .log().all()
+          .statusCode(200)
+          .extract()
+          .response();
   }
 }
