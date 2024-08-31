@@ -27,7 +27,7 @@ import tests.API.ApiConfig;
 import tests.API.AuthorizationApi;
 
 @DisplayName("Тесты для вкладки Profile")
-public class ProfileTest extends ApiConfig {
+public class ProfileTests extends ApiConfig {
 
   AuthorizationApi authorizationApi = new AuthorizationApi();
 
